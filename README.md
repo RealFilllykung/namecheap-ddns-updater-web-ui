@@ -23,6 +23,10 @@ docker-compose up -d
 http://localhost:<tbd>
 ```
 
+## How to Use This Program
+
+TBD
+
 ## Technical Specification
 
 Before we move on, if you want to investigate my design decision, please feel free to access `design-decision` folder. In those folder will contains bunch of questions and decision that I have used for making this project.
