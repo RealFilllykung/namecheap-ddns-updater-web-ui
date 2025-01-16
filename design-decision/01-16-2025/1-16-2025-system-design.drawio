@@ -1,0 +1,105 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.5 Chrome/126.0.6478.183 Electron/31.3.0 Safari/537.36" version="24.7.5" pages="2">
+  <diagram name="system-design" id="kjg67T9qdXq7BHTLjgKS">
+    <mxGraphModel dx="2049" dy="1194" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-31" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="360" width="760" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-2" value="" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="120" width="200" height="400" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="DIkA2xlQ3GwVbo-LWIOJ-3" target="DIkA2xlQ3GwVbo-LWIOJ-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-3" value="Dashboard page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="DIkA2xlQ3GwVbo-LWIOJ-4" target="DIkA2xlQ3GwVbo-LWIOJ-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-4" value="Maintain page" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="280" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;startArrow=classic;startFill=1;" edge="1" parent="1" source="DIkA2xlQ3GwVbo-LWIOJ-6" target="DIkA2xlQ3GwVbo-LWIOJ-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-6" value="Record service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="480" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-10" value="GET&lt;div&gt;Domain record&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="370" y="195" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-12" value="GET POST PUT DELETE&lt;div&gt;Domain record&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="360" y="270" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="DIkA2xlQ3GwVbo-LWIOJ-13" target="DIkA2xlQ3GwVbo-LWIOJ-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="DIkA2xlQ3GwVbo-LWIOJ-13" target="DIkA2xlQ3GwVbo-LWIOJ-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-13" value="DDNS IP service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="960" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-14" value="Namecheap" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1200" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-15" value="Database" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" vertex="1" parent="1">
+          <mxGeometry x="650" y="60" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-16" value="Password service" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="760" y="200" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-18" value="GET POST PUT DELETE&lt;div&gt;Password&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="600" y="180" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-24" value="GET&lt;div&gt;Password&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="880" y="190" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-25" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DIkA2xlQ3GwVbo-LWIOJ-6" target="DIkA2xlQ3GwVbo-LWIOJ-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="540" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-26" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="DIkA2xlQ3GwVbo-LWIOJ-16" target="DIkA2xlQ3GwVbo-LWIOJ-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="820" y="100" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=1;entryY=0;entryDx=0;entryDy=27.5;entryPerimeter=0;" edge="1" parent="1" source="DIkA2xlQ3GwVbo-LWIOJ-13" target="DIkA2xlQ3GwVbo-LWIOJ-15">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1020" y="88" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-28" value="GET POST PUT DELETE&lt;div&gt;Domain record&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="380" y="125" width="160" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-29" value="GET POST PUT DELETE&lt;div&gt;Encrypted password record&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="815" y="125" width="170" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-30" value="GET PUT&lt;div&gt;DDNS IP record&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="820" y="45" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="DIkA2xlQ3GwVbo-LWIOJ-33" value="GET" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="1120" y="200" width="50" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="N-i9O3OcKBvNJTtG7Acj" name="database-record">
+    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

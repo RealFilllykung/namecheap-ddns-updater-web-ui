@@ -61,7 +61,13 @@ Now let's do some math calculation for database estimation.
 2. Domain name record will takes around 20 bytes.
 3. Encrypted password record would take around 64 bytes.
 4. 20 domains with same password record would take around (20 + 64) * 20 = 1,680 bytes.
-5. Previous and current IP record would cost around 30 bytes.
+5. Password record will require around 44 + 16 bytes = 60 bytes per password and IV with the following data structure.
+```
+{
+    "password":"44BytesPassword",
+    "iv":"1827348732849731"
+}
+```
 
 
 ### Non functional requirement
@@ -77,3 +83,28 @@ Based on personal experience, there's used to be the case that some IP update op
 ```
 
 ## System Design
+
+After consideration about the information we got from our user, we can come up with the following system design.
+
+![System Design](1-16-2025-system-design.png)
+
+The database will keep the following data structure.
+
+1. Domain record
+```
+{
+    "domain":"sample.mydomain.com",
+    "password":"encryptedPasswordKeptInBase64",
+    "ip":"123.123.123.123"
+}
+```
+
+2. Password record
+```
+{
+    "password":"44BytesPassword",
+    "iv":"1827348732849731"
+}
+```
+
+The database technology that we will be using is SQL database. This is because there's the relationship between password data record. I do acknowledge that introducing cache can be a good idea because there will be a lot of read operation because we are scanning for IP change. But one thing to keep in mind is that we can also keep the previous IP record inside DDNS memory too which will be more memory effective for this case.
