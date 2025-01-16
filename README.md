@@ -30,3 +30,7 @@ TBD
 ## Technical Specification
 
 Before we move on, if you want to investigate my design decision, please feel free to access `design-decision` folder. In those folder will contains bunch of questions and decision that I have used for making this project.
+
+The current version of design will follow the following system design architecture.
+
+![System Design](design-decision/01-16-2025/1-16-2025-system-design.png)
