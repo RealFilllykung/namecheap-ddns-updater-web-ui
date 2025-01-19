@@ -1,4 +1,6 @@
-﻿namespace password_service.infrastructures.interfaces.repositories;
+﻿using System.Threading.Tasks;
+
+namespace password_service.infrastructures.interfaces.repositories;
 
 public interface IPasswordDatabaseRepository
 {

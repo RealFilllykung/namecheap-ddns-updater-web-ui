@@ -1,4 +1,6 @@
-﻿namespace password_service.infrastructures.interfaces.services;
+﻿using System.Threading.Tasks;
+
+namespace password_service.infrastructures.interfaces.services;
 
 public interface IPasswordService
 {
