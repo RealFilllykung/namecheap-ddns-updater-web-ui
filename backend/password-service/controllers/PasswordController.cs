@@ -26,21 +26,21 @@ public class PasswordController
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public string PostPassword([FromBody] PasswordBody password)
+    public string PostPassword([FromBody] Password password)
     {
         return password.password;
     }
 
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public string PutPassword([FromBody] PasswordBody password)
+    public string PutPassword([FromBody] Password password)
     {
         return password.password;
     }
 
     [HttpDelete]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public string DeletePassword([FromBody] PasswordBody password)
+    public string DeletePassword([FromBody] Password password)
     {
         return password.password;
     }
