@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "1O7kVvV0IHiJYC+WKUNsgYPhMdXij9BukvY2svz6Vjc=",
+  "Source": "record-service",
+  "BasePath": "_content/record-service",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
