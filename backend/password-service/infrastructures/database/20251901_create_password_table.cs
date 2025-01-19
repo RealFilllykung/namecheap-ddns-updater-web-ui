@@ -17,5 +17,5 @@ public class CreatePasswordTable :  DbContext{
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DatabaseConnectionString"));
     }
     
-    public DbSet<PasswordRecord> Password { get; set; }
+    public DbSet<PasswordRecord> Passwords { get; set; }
 }
