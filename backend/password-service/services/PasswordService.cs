@@ -26,8 +26,7 @@ public class PasswordService : IPasswordService
     {
         EncryptPasswordResponse response = new EncryptPasswordResponse();
         byte[] passwordBytes = Encoding.ASCII.GetBytes(request.password);
-        byte[] encryptedPasswordBytes;
-        encryptedPasswordBytes = _rsa.Encrypt(passwordBytes, RSAEncryptionPadding.Pkcs1);
+        var encryptedPasswordBytes = _rsa.Encrypt(passwordBytes, RSAEncryptionPadding.Pkcs1);
         string encryptedPasswordString = Convert.ToBase64String(encryptedPasswordBytes);
         response.encryptedPassword = encryptedPasswordString;
         return response;
@@ -37,8 +36,7 @@ public class PasswordService : IPasswordService
     {
         DecryptPasswordResponse response = new DecryptPasswordResponse();
         byte[] encryptedPasswordBytes = Convert.FromBase64String(request.encryptedPassword);
-        byte[] decryptedPasswordBytes;
-        decryptedPasswordBytes = _rsa.Decrypt(encryptedPasswordBytes, RSAEncryptionPadding.Pkcs1);
+        var decryptedPasswordBytes = _rsa.Decrypt(encryptedPasswordBytes, RSAEncryptionPadding.Pkcs1);
         string decryptedPasswordString =  Encoding.ASCII.GetString(decryptedPasswordBytes);
         response.password = decryptedPasswordString;
         return response;
