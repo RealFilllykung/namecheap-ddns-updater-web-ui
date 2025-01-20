@@ -3,5 +3,4 @@
 public class EncryptPasswordResponse
 {
     public string encryptedPassword { get; set; }
-    public string iv { get; set; }
 }
