@@ -36,6 +36,11 @@ public class PasswordService : IPasswordService
     public async Task<DecryptPasswordResponse> DecryptPassword(DecryptPasswordRequest request)
     {
         DecryptPasswordResponse response = new DecryptPasswordResponse();
+        byte[] encryptedPasswordBytes = Convert.FromBase64String(request.encryptedPassword);
+        byte[] decryptedPasswordBytes;
+        decryptedPasswordBytes = _rsa.Decrypt(encryptedPasswordBytes, RSAEncryptionPadding.Pkcs1);
+        string decryptedPasswordString =  Encoding.ASCII.GetString(decryptedPasswordBytes);
+        response.password = decryptedPasswordString;
         return response;
     }
     
