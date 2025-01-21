@@ -5,6 +5,6 @@ namespace record_service.infrastructures.interfaces.repositories;
 
 public interface IPasswordRepository
 {
-    Task<EncryptPasswordResponse> EncryptPassword(EncryptPasswordRequest request);
-    Task<DecryptPasswordResponse> DecryptPassword(DecryptPasswordRequest request);
+    Task<EncryptPasswordResponse?> EncryptPassword(string password);
+    Task<DecryptPasswordResponse> DecryptPassword(string encryptedPassword);
 }
