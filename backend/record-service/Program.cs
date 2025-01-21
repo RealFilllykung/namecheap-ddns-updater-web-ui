@@ -9,8 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddDbContext<DatabaseContext>(
-    options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnectionString")));
 
 SetupDependencyInjection();
 
@@ -41,5 +39,9 @@ void SetupDependencyInjection()
     builder.Services.AddTransient<IRecordService, RecordService>();
     builder.Services.AddTransient<IIPService, IpService>();
     
+    builder.Services.AddDbContext<DatabaseContext>(
+        options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnectionString")));
+    
     builder.Services.AddHttpClient<IIpRepository,IpRepository>(client => client.BaseAddress = new Uri("http://checkip.dyndns.org"));
+    builder.Services.AddHttpClient<IPasswordRepository, PasswordRepository>(client => client.BaseAddress = new Uri(builder.Configuration["Url:PasswordService"]));
 }
