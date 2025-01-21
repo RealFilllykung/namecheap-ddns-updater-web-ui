@@ -3,7 +3,7 @@ using record_service.models.responses;
 
 namespace record_service.infrastructures.interfaces.repositories;
 
-public interface IPasswordRepository
+public interface IPasswordRepository : IDisposable
 {
     Task<EncryptPasswordResponse?> EncryptPassword(string password);
     Task<DecryptPasswordResponse> DecryptPassword(string encryptedPassword);

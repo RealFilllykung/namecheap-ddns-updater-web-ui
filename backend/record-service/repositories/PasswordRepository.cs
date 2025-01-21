@@ -33,4 +33,9 @@ public class PasswordRepository : IPasswordRepository
     {
         throw new NotImplementedException();
     }
+
+    public void Dispose()
+    {
+        _httpClient.Dispose();
+    }
 }

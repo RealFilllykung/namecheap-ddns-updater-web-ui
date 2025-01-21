@@ -17,4 +17,9 @@ public class IpRepository : IIpRepository
         HttpResponseMessage responseMessage = await _httpClient.GetAsync("");
         return await responseMessage.Content.ReadAsStringAsync();
     }
+
+    public void Dispose()
+    {
+        _httpClient.Dispose();
+    }
 }
