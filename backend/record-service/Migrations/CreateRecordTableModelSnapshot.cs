@@ -23,14 +23,7 @@ namespace record_service.Migrations
 
             modelBuilder.Entity("record_service.models.RecordModel", b =>
                 {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("id"));
-
                     b.Property<string>("domain")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("encryptedPassword")
@@ -41,7 +34,7 @@ namespace record_service.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.HasKey("id");
+                    b.HasKey("domain");
 
                     b.ToTable("Records");
                 });

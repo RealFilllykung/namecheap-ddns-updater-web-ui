@@ -51,7 +51,6 @@ public class RecordService : IRecordService
 
         CreateRecordResponse response = new CreateRecordResponse
         {
-            id = recordModel.id,
             ip = ip,
             domain = request.domain,
             encryptedPassword = encryptPasswordResponse?.encryptedPassword,
