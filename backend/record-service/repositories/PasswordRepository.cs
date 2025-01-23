@@ -29,9 +29,17 @@ public class PasswordRepository : IPasswordRepository
         return encryptPasswordResponse;
     }
 
-    public Task<DecryptPasswordResponse> DecryptPassword(string encryptedPassword)
+    public async Task<DecryptPasswordResponse> DecryptPassword(string encryptedPassword)
     {
-        throw new NotImplementedException();
+        DecryptPasswordRequest request = new DecryptPasswordRequest
+        {
+            encryptedPassword = encryptedPassword
+        };
+        StringContent stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
+        HttpResponseMessage responseMessage = await _httpClient.PostAsync("/password/DecryptPassword", stringContent);
+        string responseString = await responseMessage.Content.ReadAsStringAsync();
+        DecryptPasswordResponse? decryptPasswordResponse = JsonConvert.DeserializeObject<DecryptPasswordResponse>(responseString);
+        return decryptPasswordResponse;
     }
 
     public void Dispose()

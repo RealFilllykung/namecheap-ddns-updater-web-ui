@@ -1,4 +1,5 @@
-﻿using record_service.infrastructures.databases;
+﻿using Microsoft.EntityFrameworkCore;
+using record_service.infrastructures.databases;
 using record_service.infrastructures.interfaces;
 using record_service.infrastructures.interfaces.repositories;
 using record_service.infrastructures.interfaces.services;
@@ -37,7 +38,7 @@ public class RecordService : IRecordService
         
         _logger.LogInformation($"Recording the record into database.");
 
-        RecordModel recordModel = new RecordModel
+        RecordModel? recordModel = new RecordModel
         {
             encryptedPassword = encryptPasswordResponse?.encryptedPassword,
             domain = request.domain,
@@ -56,6 +57,18 @@ public class RecordService : IRecordService
             encryptedPassword = encryptPasswordResponse?.encryptedPassword,
         };
 
+        return response;
+    }
+
+    public async Task<RecordModel?> GetRecordByDomainName(string domainName)
+    {
+        RecordModel? response = await _databaseContext.Records.FindAsync(domainName);
+        return response;
+    }
+
+    public async Task<List<RecordModel>> GetRecords()
+    {
+        List<RecordModel> response = await _databaseContext.Records.ToListAsync();
         return response;
     }
 }

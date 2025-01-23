@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using record_service.infrastructures.interfaces.services;
+using record_service.models;
 using record_service.models.requests;
 using record_service.models.responses;
 
@@ -10,10 +11,12 @@ namespace record_service.controllers;
 public class RecordController : ControllerBase
 {
     private readonly IRecordService _recordService;
+    private readonly ILogger<RecordController> _logger;
     
-    public RecordController(IIPService ipService, IRecordService recordService)
+    public RecordController(IIPService ipService, IRecordService recordService, ILogger<RecordController> logger)
     {
         _recordService = recordService;
+        _logger = logger;
     }
 
     [HttpPost]
@@ -24,14 +27,22 @@ public class RecordController : ControllerBase
         return response;
     }
     
-    [HttpGet]
+    [HttpGet("/{domainName}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public string GetRecord()
+    public async Task<RecordModel> GetRecordByDomain(string domainName)
     {
-        return "Hello World!";
+        _logger.LogInformation($"Getting record for {domainName}");
+        RecordModel response = await _recordService.GetRecordByDomainName(domainName);
+        return response;
     }
 
-
+    [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<List<RecordModel>> GetRecords()
+    {
+        _logger.LogInformation("Getting records");
+        return await _recordService.GetRecords();
+    }
 
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
