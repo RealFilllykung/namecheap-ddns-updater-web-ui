@@ -4,7 +4,7 @@ using record_service.models.responses;
 
 namespace record_service.infrastructures.interfaces.services;
 
-public interface IRecordService
+public interface IRecordService : IDisposable
 {
     public Task CreateRecord(CreateRecordRequest request);
     public Task<GetRecordResponse?> GetRecordByDomainName(string domainName);

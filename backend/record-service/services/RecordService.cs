@@ -159,4 +159,11 @@ public class RecordService : IRecordService
         getRecordResponse.ip = recordModel.ip;
         return getRecordResponse;
     }
+
+    public void Dispose()
+    {
+        _ipService.Dispose();
+        _passwordRepository.Dispose();
+        _databaseContext.Dispose();
+    }
 }

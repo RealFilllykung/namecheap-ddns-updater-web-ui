@@ -28,4 +28,9 @@ public class IpService : IIPService
         string ip = tagSplit[0];
         return ip;
     }
+
+    public void Dispose()
+    {
+        _ipRepository.Dispose();
+    }
 }
