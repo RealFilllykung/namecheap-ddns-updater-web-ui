@@ -6,7 +6,8 @@ namespace record_service.infrastructures.interfaces.services;
 
 public interface IRecordService
 {
-    public Task<CreateRecordResponse> CreateRecord(CreateRecordRequest request);
+    public Task CreateRecord(CreateRecordRequest request);
     public Task<RecordModel?> GetRecordByDomainName(string domainName);
     public Task<List<RecordModel>> GetRecords();
+    public Task UpdateRecord(UpdateRecordRequest record);
 }

@@ -13,7 +13,7 @@ public class RecordController : ControllerBase
     private readonly IRecordService _recordService;
     private readonly ILogger<RecordController> _logger;
     
-    public RecordController(IIPService ipService, IRecordService recordService, ILogger<RecordController> logger)
+    public RecordController(IRecordService recordService, ILogger<RecordController> logger)
     {
         _recordService = recordService;
         _logger = logger;
@@ -21,10 +21,9 @@ public class RecordController : ControllerBase
 
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<CreateRecordResponse> CreateRecord([FromBody] CreateRecordRequest request)
+    public async Task CreateRecord([FromBody] CreateRecordRequest request)
     {
-        CreateRecordResponse response = await _recordService.CreateRecord(request);
-        return response;
+        await _recordService.CreateRecord(request);
     }
     
     [HttpGet("/{domainName}")]
@@ -46,9 +45,11 @@ public class RecordController : ControllerBase
 
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public string PutRecord()
+    public async Task PutRecord([FromBody] UpdateRecordRequest record)
     {
-        return "Hello World!";
+        _logger.LogInformation($"Updating record {record.domain}");
+        await _recordService.UpdateRecord(record);
+        _logger.LogInformation($"Done update record {record.domain}");
     }
 
     [HttpDelete]
