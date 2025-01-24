@@ -4,6 +4,7 @@ using record_service.infrastructures.interfaces;
 using record_service.infrastructures.interfaces.repositories;
 using record_service.infrastructures.interfaces.services;
 using record_service.models;
+using record_service.models.exceptions;
 using record_service.models.requests;
 using record_service.models.responses;
 
@@ -41,15 +42,31 @@ public class RecordService : IRecordService
             domain = request.domain,
             ip = ip
         };
-        _databaseContext.Records.Add(recordModel);
-        await _databaseContext.SaveChangesAsync();
+        try
+        {
+            _databaseContext.Records.Add(recordModel);
+            await _databaseContext.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            throw new CreateRecordException("There is an error while trying to create the record. Please see logs for more information.");
+        }
         _logger.LogInformation($"Successfully created new record for {request.domain}");
     }
 
     public async Task<GetRecordResponse?> GetRecordByDomainName(string domainName)
     {
         _logger.LogInformation($"Getting record {domainName} from database");
-        RecordModel? recordModel = await _databaseContext.Records.FindAsync(domainName);
+        RecordModel recordModel;
+        try
+        {
+            recordModel = await _databaseContext.Records.FindAsync(domainName);
+        }
+        catch (Exception exception)
+        {
+            throw new GetRecordException("There is an error while trying to get the record. Please see logs for more information.");
+        }
+        
         _logger.LogInformation($"Found record {domainName}");
         
         _logger.LogInformation($"Building response to the client of the record {domainName}");
@@ -62,7 +79,15 @@ public class RecordService : IRecordService
     public async Task<List<GetRecordResponse>> GetRecords()
     {
         _logger.LogInformation($"Getting records from database");
-        List<RecordModel> response = await _databaseContext.Records.ToListAsync();
+        List<RecordModel> response;
+        try
+        {
+            response = await _databaseContext.Records.ToListAsync();
+        }
+        catch (Exception e)
+        {
+            throw new GetRecordException("There is an error while trying to get all record. Please see logs for more information.");
+        }
         _logger.LogInformation($"Found {response.Count} records");
         
         _logger.LogInformation($"Building response to the client of the records");
@@ -80,24 +105,49 @@ public class RecordService : IRecordService
     public async Task UpdateRecord(UpdateRecordRequest record)
     {
         _logger.LogInformation($"Updating record {record.domain}");
-        RecordModel recordModel = _databaseContext.Records.Find(record.domain);
+        RecordModel recordModel;
+        try
+        {
+            recordModel = _databaseContext.Records.Find(record.domain);
+        }
+        catch (Exception)
+        {
+            throw new GetRecordException("There is an error while trying to get the record before update the record. Please see logs for more information.");
+        }
+        
         EncryptPasswordResponse encryptPasswordResponse = await _passwordRepository.EncryptPassword(record.password);
         recordModel.encryptedPassword = encryptPasswordResponse.encryptedPassword;
         recordModel.ip = await _ipService.GetCurrentPublicIP();
-        _databaseContext.Records.Update(recordModel);
-        
-        _logger.LogInformation($"Saving new {recordModel.domain}");
-        await _databaseContext.SaveChangesAsync();
+
+        try
+        {
+            _databaseContext.Records.Update(recordModel);
+            _logger.LogInformation($"Saving new {recordModel.domain}");
+            await _databaseContext.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            throw new UpdateRecordException("There is an error while trying to update the record. Please see logs for more information.");
+        }
+
     }
 
     public async Task DeleteRecord(string domainName)
     {
         _logger.LogInformation($"Deleting record {domainName}");
         RecordModel recordModel = await _databaseContext.Records.FindAsync(domainName);
-        _databaseContext.Records.Remove(recordModel);
-        
-        _logger.LogInformation($"Saving delete record {domainName}");
-        await _databaseContext.SaveChangesAsync();
+
+        try
+        {
+            _databaseContext.Records.Remove(recordModel);
+            _logger.LogInformation($"Saving delete record {domainName}");
+            await _databaseContext.SaveChangesAsync();
+        }
+        catch (Exception exception)
+        {
+            throw new DeleteRecordException("There is an error while trying to delete the record. Please see logs for more information.");
+        }
+
     }
 
     private async Task<GetRecordResponse> MapToGetRecordResponse(RecordModel recordModel)

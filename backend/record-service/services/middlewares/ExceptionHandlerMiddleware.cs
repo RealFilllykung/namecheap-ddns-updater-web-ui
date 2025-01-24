@@ -1,6 +1,9 @@
 ﻿using System.Net;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Npgsql;
 using record_service.infrastructures.abstracts;
+using record_service.models.exceptions;
 using record_service.models.responses;
 
 namespace record_service.services.middlewares;
@@ -16,8 +19,17 @@ public class ExceptionHandlerMiddleware : AbstractExceptionHandlerMiddleware
         HttpStatusCode code = (HttpStatusCode)0;
         switch (exception)
         {
-            case Exception:
-                code = HttpStatusCode.InternalServerError;
+            case CreateRecordException:
+                code = HttpStatusCode.BadRequest;
+                break;
+            case GetRecordException:
+                code = HttpStatusCode.BadRequest;
+                break;
+            case UpdateRecordException:
+                code = HttpStatusCode.BadRequest;
+                break;
+            case DeleteRecordException:
+                code = HttpStatusCode.BadRequest;
                 break;
             default:
                 code = HttpStatusCode.InternalServerError;
