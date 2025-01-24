@@ -30,17 +30,17 @@ public class RecordController : ControllerBase
     
     [HttpGet("{domainName}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<RecordModel> GetRecordByDomain(string domainName)
+    public async Task<GetRecordResponse> GetRecordByDomain(string domainName)
     {
         _logger.LogInformation($"Getting record for {domainName}");
-        RecordModel response = await _recordService.GetRecordByDomainName(domainName);
+        GetRecordResponse response = await _recordService.GetRecordByDomainName(domainName);
         _logger.LogInformation($"Done getting record for {domainName}");
         return response;
     }
 
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<List<RecordModel>> GetRecords()
+    public async Task<List<GetRecordResponse>> GetRecords()
     {
         _logger.LogInformation("Getting records");
         return await _recordService.GetRecords();

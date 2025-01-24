@@ -50,16 +50,23 @@ public class RecordService : IRecordService
         _logger.LogInformation($"Successfully created new record for {request.domain}");
     }
 
-    public async Task<RecordModel?> GetRecordByDomainName(string domainName)
+    public async Task<GetRecordResponse?> GetRecordByDomainName(string domainName)
     {
-        RecordModel? response = await _databaseContext.Records.FindAsync(domainName);
-        return response;
+        RecordModel? recordModel = await _databaseContext.Records.FindAsync(domainName);
+        GetRecordResponse getRecordResponse = await MapToGetRecordResponse(recordModel);
+        return getRecordResponse;
     }
 
-    public async Task<List<RecordModel>> GetRecords()
+    public async Task<List<GetRecordResponse>> GetRecords()
     {
         List<RecordModel> response = await _databaseContext.Records.ToListAsync();
-        return response;
+        List<GetRecordResponse> getRecordResponses = new List<GetRecordResponse>();
+        foreach (RecordModel record in response)
+        {
+            GetRecordResponse getRecordResponse = await MapToGetRecordResponse(record);
+            getRecordResponses.Add(getRecordResponse);
+        }
+        return getRecordResponses;
     }
 
     public async Task UpdateRecord(UpdateRecordRequest record)
@@ -81,5 +88,16 @@ public class RecordService : IRecordService
         RecordModel recordModel = await _databaseContext.Records.FindAsync(domainName);
         _databaseContext.Records.Remove(recordModel);
         await _databaseContext.SaveChangesAsync();
+    }
+
+    private async Task<GetRecordResponse> MapToGetRecordResponse(RecordModel recordModel)
+    {
+        DecryptPasswordResponse decryptPasswordResponse = await _passwordRepository.DecryptPassword(recordModel.encryptedPassword);
+        
+        GetRecordResponse getRecordResponse = new GetRecordResponse();
+        getRecordResponse.domain = recordModel.domain;
+        getRecordResponse.password = decryptPasswordResponse.password;
+        getRecordResponse.ip = recordModel.ip;
+        return getRecordResponse;
     }
 }
