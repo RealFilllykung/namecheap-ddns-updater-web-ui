@@ -4,6 +4,7 @@ using record_service.infrastructures.interfaces.repositories;
 using record_service.infrastructures.interfaces.services;
 using record_service.repositories;
 using record_service.services;
+using record_service.services.middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -22,6 +23,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 
 MigrateDatabase();
 
