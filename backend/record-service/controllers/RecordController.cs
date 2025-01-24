@@ -23,7 +23,7 @@ public class RecordController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task CreateRecord([FromBody] CreateRecordRequest request)
     {
-        _logger.LogInformation($"Creating record for {request.domain}");
+        _logger.LogInformation($"User call create record for {request.domain}");
         await _recordService.CreateRecord(request);
         _logger.LogInformation($"Done creating record for {request.domain}");
     }
@@ -32,7 +32,7 @@ public class RecordController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<GetRecordResponse> GetRecordByDomain(string domainName)
     {
-        _logger.LogInformation($"Getting record for {domainName}");
+        _logger.LogInformation($"User call get record for {domainName}");
         GetRecordResponse response = await _recordService.GetRecordByDomainName(domainName);
         _logger.LogInformation($"Done getting record for {domainName}");
         return response;
@@ -42,7 +42,7 @@ public class RecordController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<List<GetRecordResponse>> GetRecords()
     {
-        _logger.LogInformation("Getting records");
+        _logger.LogInformation("User call get all records");
         return await _recordService.GetRecords();
     }
 
@@ -50,7 +50,7 @@ public class RecordController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task PutRecord([FromBody] UpdateRecordRequest record)
     {
-        _logger.LogInformation($"Updating record {record.domain}");
+        _logger.LogInformation($"User call update record {record.domain}");
         await _recordService.UpdateRecord(record);
         _logger.LogInformation($"Done update record {record.domain}");
     }
@@ -60,7 +60,7 @@ public class RecordController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task DeleteRecord(string domainName)
     {
-        _logger.LogInformation($"Deleting record {domainName}");
+        _logger.LogInformation($"User call delete record {domainName}");
         await _recordService.DeleteRecord(domainName);
         _logger.LogInformation($"Done delete record {domainName}");
     }
