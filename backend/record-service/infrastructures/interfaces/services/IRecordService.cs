@@ -10,4 +10,5 @@ public interface IRecordService
     public Task<RecordModel?> GetRecordByDomainName(string domainName);
     public Task<List<RecordModel>> GetRecords();
     public Task UpdateRecord(UpdateRecordRequest record);
+    public Task DeleteRecord(string domainName);
 }

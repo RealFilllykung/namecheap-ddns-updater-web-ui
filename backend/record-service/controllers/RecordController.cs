@@ -23,15 +23,18 @@ public class RecordController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task CreateRecord([FromBody] CreateRecordRequest request)
     {
+        _logger.LogInformation($"Creating record for {request.domain}");
         await _recordService.CreateRecord(request);
+        _logger.LogInformation($"Done creating record for {request.domain}");
     }
     
-    [HttpGet("/{domainName}")]
+    [HttpGet("{domainName}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<RecordModel> GetRecordByDomain(string domainName)
     {
         _logger.LogInformation($"Getting record for {domainName}");
         RecordModel response = await _recordService.GetRecordByDomainName(domainName);
+        _logger.LogInformation($"Done getting record for {domainName}");
         return response;
     }
 
@@ -53,9 +56,12 @@ public class RecordController : ControllerBase
     }
 
     [HttpDelete]
+    [Route("{domainName}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public string DeleteRecord()
+    public async Task DeleteRecord(string domainName)
     {
-        return "Hello World!";
+        _logger.LogInformation($"Deleting record {domainName}");
+        await _recordService.DeleteRecord(domainName);
+        _logger.LogInformation($"Done delete record {domainName}");
     }
 }

@@ -26,7 +26,6 @@ public class RecordService : IRecordService
 
     public async Task CreateRecord(CreateRecordRequest request)
     {
-        _logger.LogInformation($"Creating new record for {request.domain}");
         _logger.LogInformation($"Getting current IP for {request.domain}");
         
         string ip = await _ipService.GetCurrentPublicIP();
@@ -66,15 +65,21 @@ public class RecordService : IRecordService
     public async Task UpdateRecord(UpdateRecordRequest record)
     {
         RecordModel recordModel = _databaseContext.Records.Find(record.domain);
-        recordModel.encryptedPassword = record.password;
+        EncryptPasswordRequest encryptPasswordRequest = new EncryptPasswordRequest()
+        {
+            password = record.password
+        };
+        EncryptPasswordResponse encryptPasswordResponse = await _passwordRepository.EncryptPassword(record.password);
+        recordModel.encryptedPassword = encryptPasswordResponse.encryptedPassword;
         recordModel.ip = await _ipService.GetCurrentPublicIP();
         _databaseContext.Records.Update(recordModel);
         await _databaseContext.SaveChangesAsync();
     }
 
-    public async Task UpdateRecord(RecordModel record)
+    public async Task DeleteRecord(string domainName)
     {
-        _databaseContext.Records.Update(record);
+        RecordModel recordModel = await _databaseContext.Records.FindAsync(domainName);
+        _databaseContext.Records.Remove(recordModel);
         await _databaseContext.SaveChangesAsync();
     }
 }
