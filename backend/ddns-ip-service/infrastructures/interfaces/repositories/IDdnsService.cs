@@ -5,5 +5,5 @@ namespace ddns_ip_service.infrastructures.interfaces.repositories;
 
 public interface IDdnsService : IDisposable
 {
-    Task UpdateDdns(UpdateDdnsRequest request);
+    Task UpdateDdns(string request);
 }

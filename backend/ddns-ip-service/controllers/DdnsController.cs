@@ -23,7 +23,7 @@ public class DdnsController : ControllerBase
     public async Task UpdateDdns([FromBody] UpdateDdnsRequest request)
     {
         _logger.LogInformation($"Updating DDNS for {request.domain}");
-        await _ddnsService.UpdateDdns(request);
+        await _ddnsService.UpdateDdns(request.domain);
         _logger.LogInformation($"Updated DDNS for {request.domain}");
     }
 }

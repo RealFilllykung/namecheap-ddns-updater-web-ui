@@ -25,16 +25,15 @@ public class DdnsService : IDdnsService
         _namecheapRepository = namecheapRepository;
     }
 
-    public async Task UpdateDdns(UpdateDdnsRequest request)
+    public async Task UpdateDdns(string domain)
     {
-        string domain = request.domain;
         string ip = await _ipRepository.GetCurrentPublicIp();
 
         RecordModel? recordModel = await _databaseContext.Records.FindAsync(domain);
         
         string password = _passwordRepository.DecryptPassword(recordModel?.encryptedPassword).Result.password;
         string query = BuildNamecheapDdnsUpdateQuery(domain,ip,password);
-        string result = await _namecheapRepository.UpdateDdns(query);
+        _namecheapRepository.UpdateDdns(query);
         recordModel.ip = ip;
         _databaseContext.Records.Update(recordModel);
         await _databaseContext.SaveChangesAsync();
