@@ -15,9 +15,12 @@ public class IpService : IIPService
 
     public async Task<string> GetCurrentPublicIP()
     {
-        string responseBody = await _ipRepository.GetCurrentPublicIp();
-        string ip = GetIpFromBody(responseBody);
-        return ip;
+        using (_ipRepository)
+        {
+            string responseBody = await _ipRepository.GetCurrentPublicIp();
+            string ip = GetIpFromBody(responseBody);
+            return ip;
+        }
     }
 
     private string GetIpFromBody(string responseBody)
@@ -32,5 +35,6 @@ public class IpService : IIPService
     public void Dispose()
     {
         _ipRepository.Dispose();
+        GC.SuppressFinalize(this);
     }
 }

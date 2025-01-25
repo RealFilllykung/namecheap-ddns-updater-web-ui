@@ -18,12 +18,14 @@ public class PasswordRepository : IPasswordRepository
 
     public async Task<EncryptPasswordResponse?> EncryptPassword(string password)
     {
+        HttpResponseMessage responseMessage;
+        
         EncryptPasswordRequest request = new EncryptPasswordRequest
         {
             password = password
         };
         StringContent stringContent = new StringContent(JsonConvert.SerializeObject(request), Encoding.UTF8, "application/json");
-        HttpResponseMessage responseMessage = await _httpClient.PostAsync("/password/EncryptPassword", stringContent);
+        responseMessage = await _httpClient.PostAsync("/password/EncryptPassword", stringContent);
         string responseString = await responseMessage.Content.ReadAsStringAsync();
         EncryptPasswordResponse? encryptPasswordResponse = JsonConvert.DeserializeObject<EncryptPasswordResponse>(responseString);
         return encryptPasswordResponse;

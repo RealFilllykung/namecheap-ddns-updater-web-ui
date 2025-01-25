@@ -14,8 +14,11 @@ public class IpRepository : IIpRepository
 
     public async Task<string> GetCurrentPublicIp()
     {
-        HttpResponseMessage responseMessage = await _httpClient.GetAsync("");
-        return await responseMessage.Content.ReadAsStringAsync();
+        using (_httpClient)
+        {
+            HttpResponseMessage responseMessage = await _httpClient.GetAsync("");
+            return await responseMessage.Content.ReadAsStringAsync();
+        }
     }
 
     public void Dispose()
