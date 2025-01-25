@@ -17,8 +17,18 @@ public class IpRepository : IIpRepository
         using (_httpClient)
         {
             HttpResponseMessage responseMessage = await _httpClient.GetAsync("");
-            return await responseMessage.Content.ReadAsStringAsync();
+            string stringContent = await responseMessage.Content.ReadAsStringAsync();
+            return GetIpFromBody(stringContent);
         }
+    }
+    
+    private string GetIpFromBody(string responseBody)
+    {
+        string[] colonSplit = responseBody.Split(':');
+        string behindSubstring = colonSplit[1].Substring(1);
+        string[] tagSplit = behindSubstring.Split('<');
+        string ip = tagSplit[0];
+        return ip;
     }
 
     public void Dispose()

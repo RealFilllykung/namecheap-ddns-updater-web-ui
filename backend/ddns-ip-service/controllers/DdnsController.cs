@@ -20,7 +20,7 @@ public class DdnsController : ControllerBase
 
     [HttpPut]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task UpdateDdns([FromBody] RecordModel request)
+    public async Task UpdateDdns([FromBody] UpdateDdnsRequest request)
     {
         _logger.LogInformation($"Updating DDNS for {request.domain}");
         await _ddnsService.UpdateDdns(request);
