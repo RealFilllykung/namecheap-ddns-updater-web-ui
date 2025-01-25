@@ -19,11 +19,12 @@ public class DdnsController : ControllerBase
     }
 
     [HttpPut]
+    [Route("/{domain}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task UpdateDdns([FromBody] UpdateDdnsRequest request)
+    public async Task UpdateDdns(string domain)
     {
-        _logger.LogInformation($"Updating DDNS for {request.domain}");
-        await _ddnsService.UpdateDdns(request.domain);
-        _logger.LogInformation($"Updated DDNS for {request.domain}");
+        _logger.LogInformation($"Updating DDNS for {domain}");
+        await _ddnsService.UpdateDdns(domain);
+        _logger.LogInformation($"Updated DDNS for {domain}");
     }
 }
