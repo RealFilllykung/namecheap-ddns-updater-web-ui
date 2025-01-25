@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ddns_ip_service.controllers;
 
 [ApiController]
-[Route("controller")]
+[Route("ddns")]
 public class DdnsController : ControllerBase
 {
     private readonly ILogger<DdnsController> _logger;
@@ -23,6 +23,7 @@ public class DdnsController : ControllerBase
     public async Task UpdateDdns([FromBody] RecordModel request)
     {
         _logger.LogInformation($"Updating DDNS for {request.domain}");
-        _ddnsService.UpdateDdns(request);
+        await _ddnsService.UpdateDdns(request);
+        _logger.LogInformation($"Updated DDNS for {request.domain}");
     }
 }

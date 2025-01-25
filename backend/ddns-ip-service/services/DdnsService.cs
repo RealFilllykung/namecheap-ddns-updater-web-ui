@@ -14,13 +14,15 @@ public class DdnsService : IDdnsService
     private readonly DatabaseContext _databaseContext;
     private readonly IPasswordRepository _passwordRepository;
     private readonly IIpRepository _ipRepository;
+    private readonly INamecheapRepository _namecheapRepository;
 
-    public DdnsService(ILogger<DdnsService> logger, DatabaseContext databaseContext, IPasswordRepository passwordRepository, IIpRepository ipRepository)
+    public DdnsService(ILogger<DdnsService> logger, DatabaseContext databaseContext, IPasswordRepository passwordRepository, IIpRepository ipRepository, INamecheapRepository namecheapRepository)
     {
         _logger = logger;
         _databaseContext = databaseContext;
         _passwordRepository = passwordRepository;
         _ipRepository = ipRepository;
+        _namecheapRepository = namecheapRepository;
     }
 
     public async Task UpdateDdns(RecordModel request)
@@ -33,13 +35,27 @@ public class DdnsService : IDdnsService
         RecordModel? recordModel = await _databaseContext.Records.FindAsync(domain);
         if (ip != recordModel?.ip)
         {
-            // Update the record
+            string query = BuildNamecheapDdnsUpdateQuery(domain,ip,password);
+            string result = await _namecheapRepository.UpdateDdns(query);
+            _logger.LogInformation(result);
+            recordModel.ip = ip;
+            _databaseContext.Records.Update(recordModel);
+            await _databaseContext.SaveChangesAsync();
         }
-        throw new NotImplementedException();
+    }
+
+    private string BuildNamecheapDdnsUpdateQuery(string domain, string ip, string password)
+    {
+        string host = domain.Split('.')[0];
+        string domainName = domain.Split('.')[1] + "." + domain.Split('.')[2];
+        return $"update?host={host}&domain={domainName}&password={password}&ip={ip}";
     }
 
     public void Dispose()
     {
-        // TODO release managed resources here
+        _databaseContext.Dispose();
+        _passwordRepository.Dispose();
+        _ipRepository.Dispose();
+        _namecheapRepository.Dispose();
     }
 }

@@ -22,6 +22,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.MapControllers();
 
 app.Run();
 
@@ -33,5 +34,6 @@ void SetupDependencyInjection()
         options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnectionString")));
     
     builder.Services.AddHttpClient<IIpRepository,IpRepository>(client => client.BaseAddress = new Uri("http://checkip.dyndns.org"));
+    builder.Services.AddHttpClient<INamecheapRepository, NamecheapRepository>(client => client.BaseAddress = new Uri(builder.Configuration["Url:NamecheapDynamicDnsUrl"]));
     builder.Services.AddHttpClient<IPasswordRepository, PasswordRepository>(client => client.BaseAddress = new Uri(builder.Configuration["Url:PasswordService"]));
 }
