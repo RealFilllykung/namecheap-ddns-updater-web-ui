@@ -4,6 +4,10 @@ services:
     build:
       context: ./backend/password-service
       dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 80M
 
   record-service:
     restart: always
@@ -12,6 +16,10 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:8080
+    deploy:
+      resources:
+        limits:
+          memory: 80M
   
   database:
     image: postgres:alpine
