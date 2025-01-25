@@ -15,8 +15,9 @@ public class NamecheapRepository : INamecheapRepository
     {
         HttpResponseMessage response = await _httpClient.GetAsync($"/{query}");
         string responseString = await response.Content.ReadAsStringAsync();
-        string errorSplit = responseString.Split("Err")[0];
-        if (errorSplit.Length > 0) throw new Exception("There was an error updating to Namecheap");
+        string errorCountSplit = responseString.Split("ErrCount")[1];
+        int errorCount = Int32.Parse(errorCountSplit.Substring(1, errorCountSplit.Length - 3));
+        if (errorCount > 0) throw new Exception("There was an error updating to Namecheap");
         return responseString;
     }
 
