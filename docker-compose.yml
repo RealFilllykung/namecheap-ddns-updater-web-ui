@@ -9,6 +9,16 @@ services:
         limits:
           memory: 80M
 
+  ddns-ip-service:
+    restart: always
+    build:
+      context: ./backend/ddns-ip-service
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 80M
+
   record-service:
     restart: always
     build:

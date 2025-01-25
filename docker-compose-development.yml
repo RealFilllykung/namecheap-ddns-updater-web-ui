@@ -10,6 +10,17 @@ services:
       resources:
         limits:
           memory: 80M
+  ddns-ip-service:
+    restart: always
+    build:
+      context: ./backend/ddns-ip-service
+      dockerfile: Dockerfile
+    ports:
+      - 3002:8080
+    deploy:
+      resources:
+        limits:
+          memory: 80M
 
   record-service:
     restart: always
