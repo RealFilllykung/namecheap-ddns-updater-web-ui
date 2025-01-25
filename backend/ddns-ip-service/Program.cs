@@ -1,13 +1,20 @@
-var builder = WebApplication.CreateBuilder(args);
+using ddns_ip_service.controllers;
+using ddns_ip_service.infrastructures.databases;
+using ddns_ip_service.infrastructures.interfaces;
+using ddns_ip_service.infrastructures.interfaces.repositories;
+using ddns_ip_service.repositories;
+using ddns_ip_service.services;
+using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+SetupDependencyInjection();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -16,29 +23,15 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-    {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
-                new WeatherForecast
-                (
-                    DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                    Random.Shared.Next(-20, 55),
-                    summaries[Random.Shared.Next(summaries.Length)]
-                ))
-            .ToArray();
-        return forecast;
-    })
-    .WithName("GetWeatherForecast")
-    .WithOpenApi();
-
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+void SetupDependencyInjection()
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    builder.Services.AddTransient<IDdnsService, DdnsService>();
+    
+    builder.Services.AddDbContext<DatabaseContext>(
+        options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnectionString")));
+    
+    builder.Services.AddHttpClient<IIpRepository,IpRepository>(client => client.BaseAddress = new Uri("http://checkip.dyndns.org"));
+    builder.Services.AddHttpClient<IPasswordRepository, PasswordRepository>(client => client.BaseAddress = new Uri(builder.Configuration["Url:PasswordService"]));
 }
