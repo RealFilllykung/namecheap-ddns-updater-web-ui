@@ -122,6 +122,7 @@ public class RecordService : IRecordService
     {
         _logger.LogInformation($"Updating record {record.domain}");
         RecordModel? recordModel;
+        
         await using (_databaseContext)
         {
             try
@@ -132,14 +133,10 @@ public class RecordService : IRecordService
             {
                 throw new GetRecordException("There is an error while trying to get the record before update the record. Please see logs for more information.");
             }
-        }
-        
-        EncryptPasswordResponse? encryptPasswordResponse = await _passwordRepository.EncryptPassword(record.password);
-        recordModel.encryptedPassword = encryptPasswordResponse.encryptedPassword;
-        recordModel.ip = await _ipService.GetCurrentPublicIP();
-
-        await using (_databaseContext)
-        {
+            
+            EncryptPasswordResponse? encryptPasswordResponse = await _passwordRepository.EncryptPassword(record.password);
+            recordModel.encryptedPassword = encryptPasswordResponse.encryptedPassword;
+            recordModel.ip = await _ipService.GetCurrentPublicIP();
             try
             {
                 _databaseContext.Records.Update(recordModel);
