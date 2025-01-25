@@ -105,17 +105,20 @@ public class RecordService : IRecordService
             }
             _logger.LogInformation($"Found {response.Count} records");
         }
-        
-        _logger.LogInformation($"Building response to the client of the records");
-        List<GetRecordResponse> getRecordResponses = new List<GetRecordResponse>();
-        foreach (RecordModel? record in response)
+
+        using (_passwordRepository)
         {
-            GetRecordResponse getRecordResponse = await MapToGetRecordResponse(record);
-            getRecordResponses.Add(getRecordResponse);
-        }
+            _logger.LogInformation($"Building response to the client of the records");
+            List<GetRecordResponse> getRecordResponses = new List<GetRecordResponse>();
+            foreach (RecordModel? record in response)
+            {
+                GetRecordResponse getRecordResponse = await MapToGetRecordResponse(record);
+                getRecordResponses.Add(getRecordResponse);
+            }
         
-        _logger.LogInformation($"Returning {response.Count} records");
-        return getRecordResponses;
+            _logger.LogInformation($"Returning {response.Count} records");
+            return getRecordResponses;
+        }
     }
 
     public async Task UpdateRecord(UpdateRecordRequest record)
