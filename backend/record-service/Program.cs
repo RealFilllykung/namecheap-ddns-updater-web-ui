@@ -40,10 +40,12 @@ void SetupDependencyInjection()
 {
     builder.Services.AddTransient<IRecordService, RecordService>();
     builder.Services.AddTransient<IIPService, IpService>();
+    builder.Services.AddTransient<IDdnsService, DdnsService>();
     
     builder.Services.AddDbContext<DatabaseContext>(
         options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnectionString")));
     
     builder.Services.AddHttpClient<IIpRepository,IpRepository>(client => client.BaseAddress = new Uri("http://checkip.dyndns.org"));
     builder.Services.AddHttpClient<IPasswordRepository, PasswordRepository>(client => client.BaseAddress = new Uri(builder.Configuration["Url:PasswordService"]));
+    builder.Services.AddHttpClient<IDdnsRepository, DdnsRepository>(client => client.BaseAddress = new Uri(builder.Configuration["Url:DdnsService"]));
 }
