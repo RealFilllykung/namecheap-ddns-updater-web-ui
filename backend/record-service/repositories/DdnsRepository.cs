@@ -1,15 +1,14 @@
 ﻿using record_service.infrastructures.interfaces.repositories;
+using record_service.models.requests;
 
 namespace record_service.repositories;
 
 public class DdnsRepository : IDdnsRepository
 {
-    private readonly ILogger<DdnsRepository> _logger;
     private readonly HttpClient _httpClient;
 
-    public DdnsRepository(ILogger<DdnsRepository> logger, HttpClient httpClient)
+    public DdnsRepository(HttpClient httpClient)
     {
-        _logger = logger;
         _httpClient = httpClient;
     }
 
@@ -18,11 +17,11 @@ public class DdnsRepository : IDdnsRepository
         _httpClient.Dispose();
     }
 
-    public async Task<HttpResponseMessage> UpdateDdnsRecord(string domain)
+    public async Task<HttpResponseMessage> UpdateDdnsRecord(UpdateDdnsRequest request)
     {
         using (_httpClient)
         {
-            HttpResponseMessage response = await _httpClient.GetAsync($"{domain}");
+            HttpResponseMessage response = await _httpClient.PutAsJsonAsync($"{request.domain}",request);
             return response;
         }
     }

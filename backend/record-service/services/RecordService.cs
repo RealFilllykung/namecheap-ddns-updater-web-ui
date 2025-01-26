@@ -15,13 +15,15 @@ public class RecordService : IRecordService
     private readonly ILogger<RecordService> _logger;
     private readonly IPasswordRepository _passwordRepository;
     private readonly DatabaseContext _databaseContext;
+    private readonly IDdnsService _ddnsService;
 
-    public RecordService(IIPService ipService, ILogger<RecordService> logger, IPasswordRepository passwordRepository, DatabaseContext databaseContext)
+    public RecordService(IIPService ipService, ILogger<RecordService> logger, IPasswordRepository passwordRepository, DatabaseContext databaseContext, IDdnsService ddnsService)
     {
         _ipService = ipService;
         _logger = logger;
         _passwordRepository = passwordRepository;
         _databaseContext = databaseContext;
+        _ddnsService = ddnsService;
     }
 
     public async Task CreateRecord(CreateRecordRequest request)
@@ -55,10 +57,25 @@ public class RecordService : IRecordService
             {
                 _databaseContext.Records.Add(recordModel);
                 await _databaseContext.SaveChangesAsync();
+
+                using (_ddnsService)
+                {
+                    try
+                    {
+                        await _ddnsService.UpdateDdnsRecord(recordModel.domain);
+                    }
+                    catch (Exception)
+                    {
+                        _databaseContext.Records.Remove(recordModel);
+                        await _databaseContext.SaveChangesAsync();
+                        throw new CreateRecordException("The provided record and password information cannot update DDNS record.");
+                    }
+                    
+                }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                throw new CreateRecordException("There is an error while trying to create the record. Please see logs for more information.");
+                throw new CreateRecordException(exception.Message);
             }
             _logger.LogInformation($"Successfully created new record for {request.domain}");
         }
