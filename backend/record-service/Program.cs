@@ -39,7 +39,6 @@ void MigrateDatabase()
 void SetupDependencyInjection()
 {
     builder.Services.AddTransient<IRecordService, RecordService>();
-    builder.Services.AddTransient<IIPService, IpService>();
     builder.Services.AddTransient<IDdnsService, DdnsService>();
     
     builder.Services.AddDbContext<DatabaseContext>(

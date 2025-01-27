@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using record_service.infrastructures.databases;
 using record_service.infrastructures.interfaces.repositories;
 using record_service.infrastructures.interfaces.services;
@@ -11,15 +12,13 @@ namespace record_service.services;
 
 public class RecordService : IRecordService
 {
-    private readonly IIPService _ipService;
     private readonly ILogger<RecordService> _logger;
     private readonly IPasswordRepository _passwordRepository;
     private readonly DatabaseContext _databaseContext;
     private readonly IDdnsService _ddnsService;
 
-    public RecordService(IIPService ipService, ILogger<RecordService> logger, IPasswordRepository passwordRepository, DatabaseContext databaseContext, IDdnsService ddnsService)
+    public RecordService(ILogger<RecordService> logger, IPasswordRepository passwordRepository, DatabaseContext databaseContext, IDdnsService ddnsService)
     {
-        _ipService = ipService;
         _logger = logger;
         _passwordRepository = passwordRepository;
         _databaseContext = databaseContext;
@@ -28,19 +27,12 @@ public class RecordService : IRecordService
 
     public async Task CreateRecord(CreateRecordRequest request)
     {
-        string ip;
         EncryptPasswordResponse? encryptPasswordResponse;
-        using (_ipService)
-        {
-            _logger.LogInformation($"Getting current IP for {request.domain}");
-            ip = await _ipService.GetCurrentPublicIP();
-            _logger.LogInformation($"Obtained public IP of {ip}");
-        }
 
         using (_passwordRepository)
         {
             _logger.LogInformation($"Requesting password encryption");
-            encryptPasswordResponse = await _passwordRepository.EncryptPassword(request.password);
+            encryptPasswordResponse = await _passwordRepository.EncryptPassword(request.password.Replace(" ",""));
             _logger.LogInformation($"Done encrypting password: {encryptPasswordResponse?.encryptedPassword}");
         }
 
@@ -50,8 +42,7 @@ public class RecordService : IRecordService
             RecordModel? recordModel = new RecordModel
             {
                 encryptedPassword = encryptPasswordResponse?.encryptedPassword,
-                domain = request.domain,
-                ip = ip
+                domain = request.domain
             };
             try
             {
@@ -153,19 +144,37 @@ public class RecordService : IRecordService
             {
                 throw new GetRecordException("There is an error while trying to get the record before update the record. Please see logs for more information.");
             }
-            
-            EncryptPasswordResponse? encryptPasswordResponse = await _passwordRepository.EncryptPassword(record.password);
+
+            string previousRecordModelString = JsonConvert.SerializeObject(recordModel);
+            EncryptPasswordResponse? encryptPasswordResponse = await _passwordRepository.EncryptPassword(record.password.Replace(" ",""));
             recordModel.encryptedPassword = encryptPasswordResponse.encryptedPassword;
-            recordModel.ip = await _ipService.GetCurrentPublicIP();
             try
             {
                 _databaseContext.Records.Update(recordModel);
                 _logger.LogInformation($"Saving new {recordModel.domain}");
                 await _databaseContext.SaveChangesAsync();
+
+                using (_ddnsService)
+                {
+                    try
+                    {
+                        await _ddnsService.UpdateDdnsRecord(recordModel.domain);
+                    }
+                    catch (Exception)
+                    {
+                        _databaseContext.Records.Remove(recordModel);
+                        await _databaseContext.SaveChangesAsync();
+                        
+                        recordModel = JsonConvert.DeserializeObject<RecordModel>(previousRecordModelString);
+                        _databaseContext.Records.Add(recordModel);
+                        await _databaseContext.SaveChangesAsync();
+                        throw new UpdateRecordException("The provided record and password information cannot update DDNS record.");
+                    }
+                }
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                throw new UpdateRecordException("There is an error while trying to update the record. Please see logs for more information.");
+                throw new UpdateRecordException(exception.Message);
             }
         }
     }
@@ -202,7 +211,6 @@ public class RecordService : IRecordService
 
     public void Dispose()
     {
-        _ipService.Dispose();
         _passwordRepository.Dispose();
         _databaseContext.Dispose();
         GC.SuppressFinalize(this);
