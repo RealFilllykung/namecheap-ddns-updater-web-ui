@@ -33,7 +33,7 @@ public class DdnsService : IDdnsService
         
         string password = _passwordRepository.DecryptPassword(recordModel?.encryptedPassword).Result.password;
         string query = BuildNamecheapDdnsUpdateQuery(domain,ip,password);
-        _namecheapRepository.UpdateDdns(query);
+        await _namecheapRepository.UpdateDdns(query);
         recordModel.ip = ip;
         _databaseContext.Records.Update(recordModel);
         await _databaseContext.SaveChangesAsync();
