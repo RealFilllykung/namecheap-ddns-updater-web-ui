@@ -1,5 +1,4 @@
 ﻿using ddns_ip_service.infrastructures.databases;
-using ddns_ip_service.infrastructures.interfaces.repositories;
 using ddns_ip_service.infrastructures.interfaces.services;
 using ddns_ip_service.models;
 
