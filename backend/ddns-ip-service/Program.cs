@@ -31,6 +31,7 @@ void SetupDependencyInjection()
     builder.Services.AddTransient<IIpService, IpService>();
     builder.Services.AddTransient<IDatabaseService, DatabaseService>();
     builder.Services.AddTransient<IPasswordService, PasswordService>();
+    builder.Services.AddTransient<INamecheapService, NamecheapService>();
     
     builder.Services.AddDbContext<DatabaseContext>(
         options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnectionString")));
