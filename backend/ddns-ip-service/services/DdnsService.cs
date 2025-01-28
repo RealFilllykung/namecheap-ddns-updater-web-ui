@@ -41,7 +41,14 @@ public class DdnsService : IDdnsService
 
         foreach (RecordModel? record in recordModels)
         {
-            if (record != null) await UpdateDdnsRecord(record, ip);
+            try
+            {
+                if (record != null) await UpdateDdnsRecord(record, ip);
+            }
+            catch (Exception exception)
+            {
+                _logger.LogError(exception, "Failed to update record.");
+            }
         }
     }
 
