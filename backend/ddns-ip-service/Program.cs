@@ -1,7 +1,6 @@
-using ddns_ip_service.controllers;
 using ddns_ip_service.infrastructures.databases;
-using ddns_ip_service.infrastructures.interfaces;
 using ddns_ip_service.infrastructures.interfaces.repositories;
+using ddns_ip_service.infrastructures.interfaces.services;
 using ddns_ip_service.repositories;
 using ddns_ip_service.services;
 using Microsoft.EntityFrameworkCore;
@@ -29,6 +28,9 @@ app.Run();
 void SetupDependencyInjection()
 {
     builder.Services.AddTransient<IDdnsService, DdnsService>();
+    builder.Services.AddTransient<IIpService, IpService>();
+    builder.Services.AddTransient<IDatabaseService, DatabaseService>();
+    builder.Services.AddTransient<IPasswordService, PasswordService>();
     
     builder.Services.AddDbContext<DatabaseContext>(
         options => options.UseNpgsql(builder.Configuration.GetConnectionString("DatabaseConnectionString")));

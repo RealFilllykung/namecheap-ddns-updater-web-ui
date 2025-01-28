@@ -1,4 +1,5 @@
 ﻿using ddns_ip_service.infrastructures.interfaces.repositories;
+using ddns_ip_service.infrastructures.interfaces.services;
 using ddns_ip_service.models;
 using ddns_ip_service.models.requests;
 using Microsoft.AspNetCore.Mvc;

@@ -17,5 +17,5 @@ public class DatabaseContext : DbContext
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DatabaseConnectionString"));
     }
     
-    public DbSet<RecordModel> Records { get; set; }
+    public DbSet<RecordModel?> Records { get; set; }
 }

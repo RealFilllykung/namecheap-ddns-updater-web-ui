@@ -1,9 +1,7 @@
 ﻿using ddns_ip_service.infrastructures.databases;
-using ddns_ip_service.infrastructures.interfaces;
 using ddns_ip_service.infrastructures.interfaces.repositories;
+using ddns_ip_service.infrastructures.interfaces.services;
 using ddns_ip_service.models;
-using ddns_ip_service.models.requests;
-using ddns_ip_service.models.responses;
 
 namespace ddns_ip_service.services;
 
@@ -12,45 +10,53 @@ public class DdnsService : IDdnsService
     
     private readonly ILogger<DdnsService> _logger;
     private readonly DatabaseContext _databaseContext;
-    private readonly IPasswordRepository _passwordRepository;
-    private readonly IIpRepository _ipRepository;
-    private readonly INamecheapRepository _namecheapRepository;
+    private readonly IIpService _ipService;
+    private readonly IDatabaseService _databaseService;
+    private readonly INamecheapService _namecheapService;
+    private readonly IPasswordService _passwordService;
 
-    public DdnsService(ILogger<DdnsService> logger, DatabaseContext databaseContext, IPasswordRepository passwordRepository, IIpRepository ipRepository, INamecheapRepository namecheapRepository)
+    public DdnsService(ILogger<DdnsService> logger, DatabaseContext databaseContext, IIpService ipService, IDatabaseService databaseService, INamecheapService namecheapService, IPasswordService passwordService)
     {
         _logger = logger;
         _databaseContext = databaseContext;
-        _passwordRepository = passwordRepository;
-        _ipRepository = ipRepository;
-        _namecheapRepository = namecheapRepository;
+        _ipService = ipService;
+        _databaseService = databaseService;
+        _namecheapService = namecheapService;
+        _passwordService = passwordService;
     }
 
     public async Task UpdateDdns(string domain)
     {
-        string ip = await _ipRepository.GetCurrentPublicIp();
+        string ip = await _ipService.GetCurrentPublicIp();
 
-        RecordModel? recordModel = await _databaseContext.Records.FindAsync(domain);
-        
-        string password = _passwordRepository.DecryptPassword(recordModel?.encryptedPassword).Result.password;
-        string query = BuildNamecheapDdnsUpdateQuery(domain,ip,password);
-        await _namecheapRepository.UpdateDdns(query);
-        recordModel.ip = ip;
-        _databaseContext.Records.Update(recordModel);
-        await _databaseContext.SaveChangesAsync();
+        RecordModel? recordModel = await _databaseService.GetRecord(domain);
+
+        if (recordModel != null) await UpdateDdnsRecord(recordModel, ip);
     }
 
-    private string BuildNamecheapDdnsUpdateQuery(string domain, string ip, string password)
+    public async Task UpdateAllDdns()
     {
-        string host = domain.Split('.')[0];
-        string domainName = domain.Split('.')[1] + "." + domain.Split('.')[2];
-        return $"update?host={host}&domain={domainName}&password={password}&ip={ip}";
+        string ip = await _ipService.GetCurrentPublicIp();
+        List<RecordModel?> recordModels = await _databaseService.GetAllRecords();
+
+        foreach (RecordModel? record in recordModels)
+        {
+            if (record != null) await UpdateDdnsRecord(record, ip);
+        }
+    }
+
+    private async Task UpdateDdnsRecord(RecordModel record, string ip)
+    {
+        string password = await _passwordService.DecryptPassword(record.encryptedPassword);
+        string query = _namecheapService.BuildNamecheapDdnsUpdateQuery(record?.domain, ip, password);
+        await _namecheapService.UpdateDdns(query);
+        record.ip = ip;
+        await _databaseService.UpdateRecord(record);
     }
 
     public void Dispose()
     {
         _databaseContext.Dispose();
-        _passwordRepository.Dispose();
-        _ipRepository.Dispose();
-        _namecheapRepository.Dispose();
+        _ipService.Dispose();
     }
 }
