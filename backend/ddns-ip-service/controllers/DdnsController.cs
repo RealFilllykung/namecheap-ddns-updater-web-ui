@@ -28,4 +28,14 @@ public class DdnsController : ControllerBase
         await _ddnsService.UpdateDdns(domain);
         _logger.LogInformation($"Updated DDNS for {domain}");
     }
+
+    [HttpPut]
+    [Route("/")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task UpdateAllDdns()
+    {
+        _logger.LogInformation($"Updating all domain record");
+        await _ddnsService.UpdateAllDdns();
+        _logger.LogInformation($"Updated all domain record");
+    }
 }
