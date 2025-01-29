@@ -1,9 +1,10 @@
-﻿namespace record_service.infrastructures.interfaces.repositories;
+﻿using record_service.models.requests;
+using record_service.models.responses;
 
-public interface IPasswordRepository
+namespace record_service.infrastructures.interfaces.repositories;
+
+public interface IPasswordRepository : IDisposable
 {
-    Task<T> CreatePassword<T>(T record) where T : class;
-    Task<T> ReadPassword<T>(T record) where T : class;
-    Task<T> UpdatePassword<T>(T record) where T : class;
-    Task<T> DeletePassword<T>(T record) where T : class;
+    Task<EncryptPasswordResponse?> EncryptPassword(string password);
+    Task<DecryptPasswordResponse> DecryptPassword(string encryptedPassword);
 }

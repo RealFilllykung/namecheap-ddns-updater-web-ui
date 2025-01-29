@@ -1,9 +1,11 @@
-﻿namespace password_service.infrastructures.interfaces.services;
+﻿using System.Threading.Tasks;
+using password_service.models;
+using password_service.models.responses;
+
+namespace password_service.infrastructures.interfaces.services;
 
 public interface IPasswordService
 {
-    Task<string> GetAllPasswords();
-    Task<string> CreateNewPassword(string password);
-    Task<string> UpdatePassword(string oldPassword, string newPassword);
-    Task<string> DeletePassword(string password);
+    Task<EncryptPasswordResponse> EncryptPassword(EncryptPasswordRequest request);
+    Task<DecryptPasswordResponse> DecryptPassword(DecryptPasswordRequest request);
 }

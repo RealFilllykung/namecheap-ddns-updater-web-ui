@@ -1,0 +1,6 @@
+@ddns_ip_service_HostAddress = http://localhost:5240
+
+GET {{ddns_ip_service_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

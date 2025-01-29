@@ -1,13 +1,16 @@
 ﻿using System.Net.Mime;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using password_service.infrastructures.interfaces.services;
 using password_service.models;
+using password_service.models.responses;
 
 namespace password_service.controllers;
 
 [ApiController]
 [Produces(MediaTypeNames.Application.Json)]
-[Route("/password")]
+[Route("/password/[action]")]
 public class PasswordController
 {
     public PasswordController(IPasswordService passwordService)
@@ -17,31 +20,15 @@ public class PasswordController
     
     private readonly IPasswordService _passwordService;
 
-    [HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<string> GetPasswords()
+    [HttpPost]
+    public async Task<EncryptPasswordResponse> EncryptPassword([FromBody] EncryptPasswordRequest request)
     {
-        return await _passwordService.GetAllPasswords();
+        return await _passwordService.EncryptPassword(request);
     }
 
     [HttpPost]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public string PostPassword([FromBody] PasswordBody password)
+    public async Task<DecryptPasswordResponse> DecryptPassword([FromBody] DecryptPasswordRequest request)
     {
-        return password.password;
-    }
-
-    [HttpPut]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public string PutPassword([FromBody] PasswordBody password)
-    {
-        return password.password;
-    }
-
-    [HttpDelete]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    public string DeletePassword([FromBody] PasswordBody password)
-    {
-        return password.password;
+        return await _passwordService.DecryptPassword(request);
     }
 }
