@@ -1,6 +1,3 @@
-import Link from "next/link"
-import { Home, Settings, Info } from "lucide-react"
-
 export default function Header() {
   return (
     <header className="shadow-md">
