@@ -1,6 +1,8 @@
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
+import DeleteButton from "./delete-button";
+import SaveButton from "./save-button";
 
 export default function RecordTable()
 {
@@ -31,9 +33,9 @@ export default function RecordTable()
                     <TableRow key={recordModel.domain}>
                         <TableCell><Input placeholder="Domain name" value={recordModel.domain}></Input></TableCell>
                         <TableCell><Input placeholder="Password" type="password" value={recordModel.password}></Input></TableCell>
-                        <TableCell><Input placeholder="IP" value={recordModel.ip}></Input></TableCell>
-                        <TableCell><Button>Save</Button></TableCell>
-                        <TableCell><Button variant="destructive">Delete</Button></TableCell>
+                        <TableCell>{recordModel.ip}</TableCell>
+                        <TableCell className="flex justify-center"><SaveButton></SaveButton></TableCell>
+                        <TableCell><DeleteButton></DeleteButton></TableCell>
                     </TableRow>
                 ))}
             </TableBody>
