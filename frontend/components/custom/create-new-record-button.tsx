@@ -5,8 +5,8 @@ import { Input } from "../ui/input";
 
 export default function CreateNewRecordButton()
 {
-    const [domain, setDomain] = useState('')
-    const [password, setPassword] = useState('')
+    const [getDomain, setDomain] = useState('')
+    const [getPassword, setPassword] = useState('')
     return(
         <div className="m-2">
             <Dialog>
