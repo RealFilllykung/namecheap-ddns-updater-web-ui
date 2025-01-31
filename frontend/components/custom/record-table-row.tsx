@@ -12,7 +12,7 @@ export default function RecordTableRow({domainInput, passwordInput, ipInput} : {
         <TableRow>
             <TableCell><Input placeholder="Domain name" value={domain} onChange={ event => setDomain(event.target.value)}></Input></TableCell>
             <TableCell><Input placeholder="Password" type="password" value={password} onChange={ event => setPassword(event.target.value) }></Input></TableCell>
-            <TableCell></TableCell>
+            <TableCell>{ipInput}</TableCell>
             <TableCell className="flex justify-center"><SaveButton></SaveButton></TableCell>
             <TableCell><DeleteButton></DeleteButton></TableCell>
         </TableRow>
