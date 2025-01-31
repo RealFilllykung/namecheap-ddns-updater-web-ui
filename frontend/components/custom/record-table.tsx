@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "../ui/table";
 import RecordTableRow from "./record-table-row";
 

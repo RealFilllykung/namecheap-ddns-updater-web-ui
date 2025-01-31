@@ -1,11 +1,16 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { TableCell, TableRow } from "../ui/table";
 import SaveButton from "./save-button";
 import DeleteButton from "./delete-button";
 import { Input } from "../ui/input";
 
-export default function RecordTableRow({domainInput, passwordInput, ipInput} : {domainInput:string, passwordInput:string, ipInput:string})
-{
+interface RecordTableRowProps {
+    domainInput: string;
+    passwordInput: string;
+    ipInput: string;
+}
+
+const RecordTableRow: React.FC<RecordTableRowProps> = ({domainInput, passwordInput, ipInput}) => {
     const [domain, setDomain] = useState(domainInput)
     const [password, setPassword] = useState(passwordInput)
     return(
@@ -17,4 +22,6 @@ export default function RecordTableRow({domainInput, passwordInput, ipInput} : {
             <TableCell><DeleteButton></DeleteButton></TableCell>
         </TableRow>
     )
-}
+};
+
+export default RecordTableRow;

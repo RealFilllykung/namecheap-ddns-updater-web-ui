@@ -27,7 +27,6 @@ export default function CreateNewRecordButton()
                     <Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)}></Input>
                     <DialogFooter>
                         <Button>Save</Button>
-                        <Button variant="destructive">Cancel</Button>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
