@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "../ui/table";
 import RecordTableRow from "./record-table-row";
+import RecordModel from "@/models/RecordModel";
 
 const RecordTable = () =>
 {
-    const [getRecordModelList, setRecordModelList] = useState([])
+    const [getRecordModelList, setRecordModelList] = useState<RecordModel[]>([])
 
     const getAllRecords = async () => {
         const response = await fetch(process.env.NEXT_PUBLIC_RECORD_API_URL!)

@@ -1,0 +1,42 @@
+services:
+  record-service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development.Frontend
+    restart: always
+    build:
+      context: ./backend/record-service
+      dockerfile: Dockerfile
+    ports:
+      - 3001:8080
+    deploy:
+      resources:
+        limits:
+          memory: 80M
+
+  password-service:
+    restart: always
+    build:
+      context: ./backend/password-service
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 80M
+
+  ddns-ip-service:
+    restart: always
+    build:
+      context: ./backend/ddns-ip-service
+      dockerfile: Dockerfile
+    deploy:
+      resources:
+        limits:
+          memory: 80M
+  
+  database:
+    image: postgres:alpine
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_PASSWORD: defaultdnsupdaterpassword
+      POSTGRES_USER: dnsupdater
