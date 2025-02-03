@@ -1,22 +1,32 @@
+import { useEffect, useState } from "react";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "../ui/table";
 import RecordTableRow from "./record-table-row";
 
 const RecordTable = () =>
 {
-    const recordModelList = [
-        {
-            domain: "test.domain.com",
-            password: "12345678",
-            ip: "123.123.123.123"
-        },
-        {
-            domain: "test2.domain.com",
-            password: "87654321",
-            ip: "111.111.111.111"
-        }
-    ]
+    const [getRecordModelList, setRecordModelList] = useState([])
 
-    if(recordModelList.length == 0) return(<div>There is no domain record maintained yet</div>);
+    const getAllRecords = async () => {
+        const response = await fetch(process.env.NEXT_PUBLIC_RECORD_API_URL!, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'GET',
+                'Access-Control-Allow-Headers': 'Content-Type',
+            }
+        })
+        const content = await response.json()
+        return content
+    }
+
+    useEffect(() => {
+        getAllRecords().then(content => {
+            setRecordModelList(content)
+        })
+    },[])
+
+    if(getRecordModelList.length == 0) return(<div>There is no domain record maintained yet</div>);
     else return(
         <Table>
             <TableHeader>
@@ -26,7 +36,7 @@ const RecordTable = () =>
                 </TableRow>
             </TableHeader>
             <TableBody>
-                {recordModelList.map((recordModel) => (
+                {getRecordModelList.map((recordModel) => (
                     <RecordTableRow key={recordModel.domain} domainInput={recordModel.domain} passwordInput={recordModel.password} ipInput={recordModel.ip}></RecordTableRow>
                 ))}
             </TableBody>
