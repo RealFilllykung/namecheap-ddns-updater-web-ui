@@ -35,7 +35,6 @@ services:
         limits:
           memory: 80M
 
-  
   database:
     image: postgres:alpine
     restart: always

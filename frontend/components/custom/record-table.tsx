@@ -7,15 +7,7 @@ const RecordTable = () =>
     const [getRecordModelList, setRecordModelList] = useState([])
 
     const getAllRecords = async () => {
-        const response = await fetch(process.env.NEXT_PUBLIC_RECORD_API_URL!, {
-            method: "GET",
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            }
-        })
+        const response = await fetch(process.env.NEXT_PUBLIC_RECORD_API_URL!)
         const content = await response.json()
         return content
     }
