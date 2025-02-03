@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "../ui/table";
 import RecordTableRow from "./record-table-row";
 
@@ -17,7 +16,8 @@ const RecordTable = () =>
         }
     ]
 
-    return(
+    if(recordModelList.length == 0) return(<div>There is no domain record maintained yet</div>);
+    else return(
         <Table>
             <TableHeader>
                 <TableRow>
@@ -31,7 +31,7 @@ const RecordTable = () =>
                 ))}
             </TableBody>
         </Table>
-    )
+    );
 };
 
 export default RecordTable;
