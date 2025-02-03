@@ -3,7 +3,7 @@ import { Button } from "../ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 
-export default function CreateNewRecordButton()
+const CreateNewRecordButton = () =>
 {
     const [getDomain, setDomain] = useState('')
     const [getPassword, setPassword] = useState('')
@@ -23,8 +23,8 @@ export default function CreateNewRecordButton()
                         <DialogTitle>Create new record</DialogTitle>
                         <DialogDescription>Please fill in your Namecheap domain and password for updating DDNS</DialogDescription>
                     </DialogHeader>
-                    <Input placeholder="Domain name" onChange={(event) => setDomain(event.target.value)}></Input>
-                    <Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)}></Input>
+                        <Input placeholder="Domain name" onChange={(event) => setDomain(event.target.value)}></Input>
+                        <Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)}></Input>
                     <DialogFooter>
                         <DialogClose>
                             <Button>Save</Button>
@@ -33,4 +33,6 @@ export default function CreateNewRecordButton()
                 </DialogContent>
             </Dialog>
         </div>
-)}
+)};
+
+export default CreateNewRecordButton;

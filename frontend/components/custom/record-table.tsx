@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { Table, TableBody, TableHead, TableHeader, TableRow } from "../ui/table";
 import RecordTableRow from "./record-table-row";
 
-export default function RecordTable()
+const RecordTable = () =>
 {
     const recordModelList = [
         {
@@ -32,4 +32,6 @@ export default function RecordTable()
             </TableBody>
         </Table>
     )
-}
+};
+
+export default RecordTable;

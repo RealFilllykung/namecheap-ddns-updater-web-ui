@@ -1,4 +1,5 @@
-export default function Header() {
+const Header = () =>
+{
   return (
     <header className="shadow-md">
       <div className="container px-4 py-4 flex justify-between">
@@ -6,4 +7,6 @@ export default function Header() {
       </div>
     </header>
   )
-}
+};
+
+export default Header;

@@ -2,7 +2,7 @@ import { Button } from "../ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 
-export default function EditButton()
+const EditButton = () =>
 {
     return (
         <Dialog>
@@ -24,4 +24,6 @@ export default function EditButton()
             </DialogContent>
         </Dialog>
     )
-}
+};
+
+export default EditButton;
