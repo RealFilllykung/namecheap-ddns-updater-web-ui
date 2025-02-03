@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 
 export default function CreateNewRecordButton()
@@ -26,7 +26,9 @@ export default function CreateNewRecordButton()
                     <Input placeholder="Domain name" onChange={(event) => setDomain(event.target.value)}></Input>
                     <Input placeholder="Password" type="password" onChange={(event) => setPassword(event.target.value)}></Input>
                     <DialogFooter>
-                        <Button>Save</Button>
+                        <DialogClose>
+                            <Button>Save</Button>
+                        </DialogClose>
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

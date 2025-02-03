@@ -1,5 +1,5 @@
 import { Button } from "../ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 
 export default function EditButton()
@@ -17,7 +17,9 @@ export default function EditButton()
                 <Input placeholder="Domain name"></Input>
                 <Input placeholder="Password" type="password"></Input>
                 <DialogFooter>
-                    <Button>Save</Button>
+                    <DialogClose asChild>
+                        <Button>Save</Button>
+                    </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>
