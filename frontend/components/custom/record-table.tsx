@@ -22,7 +22,6 @@ export default function RecordTable()
             <TableHeader>
                 <TableRow>
                     <TableHead>Domain</TableHead>
-                    <TableHead>Password</TableHead>
                     <TableHead>IP</TableHead>
                 </TableRow>
             </TableHeader>

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { TableCell, TableRow } from "../ui/table";
-import SaveButton from "./save-button";
+import EditButton from "./edit-button";
 import DeleteButton from "./delete-button";
 import { Input } from "../ui/input";
 
@@ -15,10 +15,9 @@ const RecordTableRow: React.FC<RecordTableRowProps> = ({domainInput, passwordInp
     const [password, setPassword] = useState(passwordInput)
     return(
         <TableRow>
-            <TableCell><Input placeholder="Domain name" value={domain} onChange={ event => setDomain(event.target.value)}></Input></TableCell>
-            <TableCell><Input placeholder="Password" type="password" value={password} onChange={ event => setPassword(event.target.value) }></Input></TableCell>
+            <TableCell>{domainInput}</TableCell>
             <TableCell>{ipInput}</TableCell>
-            <TableCell className="flex justify-center"><SaveButton></SaveButton></TableCell>
+            <TableCell className="flex justify-center"><EditButton></EditButton></TableCell>
             <TableCell><DeleteButton></DeleteButton></TableCell>
         </TableRow>
     )
