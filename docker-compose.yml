@@ -1,15 +1,28 @@
 services:
+  website:
+    environment:
+      - ENV_VARIABLE=production
+      - NEXT_PUBLIC_RECORD_API_URL=http://record-service:8080/record
+    restart: always
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    deploy:
+      resources:
+        limits:
+          memory: 50M
+
   record-service:
     restart: always
     build:
       context: ./backend/record-service
       dockerfile: Dockerfile
-    ports:
-      - 3001:8080
     deploy:
       resources:
         limits:
-          memory: 80M
+          memory: 50M
 
   password-service:
     restart: always
@@ -19,7 +32,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 80M
+          memory: 50M
 
   ddns-ip-service:
     restart: always
@@ -29,7 +42,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 80M
+          memory: 50M
   
   database:
     image: postgres:alpine
