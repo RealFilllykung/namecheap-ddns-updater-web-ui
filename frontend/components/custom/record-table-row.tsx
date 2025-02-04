@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { TableCell, TableRow } from "../ui/table";
 import EditButton from "./edit-button";
 import DeleteButton from "./delete-button";

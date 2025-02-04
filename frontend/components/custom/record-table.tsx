@@ -25,7 +25,7 @@ const RecordTable = () =>
         <div className="m-2">
             <Alert>
                 <Terminal className="h-4 w-4" />
-                <AlertTitle>There's no DDNS record yet...</AlertTitle>
+                <AlertTitle>There is no DDNS record yet...</AlertTitle>
                 <AlertDescription>
                     Click create new record to add your first domain record.
                 </AlertDescription>
