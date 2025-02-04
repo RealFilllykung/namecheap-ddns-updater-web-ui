@@ -3,11 +3,13 @@ import { Button } from "../ui/button";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../ui/dialog";
 import { Input } from "../ui/input";
 import { useRouter } from "next/navigation";
+import { toast } from "@/hooks/use-toast";
+import { PlusCircle } from "lucide-react";
 
-const CreateNewRecord = async (domainInput:string, passwordInput:string) => {
+const CreateNewRecord = async (domain:string, password:string) => {
     const requestBody = {
-        "domain": domainInput,
-        "password": passwordInput
+        "domain": domain,
+        "password": password
     }
     await fetch(process.env.NEXT_PUBLIC_RECORD_API_URL!,{
         method: 'POST',
@@ -20,15 +22,12 @@ const CreateNewRecordButton = () =>
 {
     const [getDomain, setDomain] = useState('');
     const [getPassword, setPassword] = useState('');
-    const router = useRouter();
     return(
         <div className="m-2">
             <Dialog>
                 <DialogTrigger asChild>
                     <Button className="w-full" size="lg">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
+                        <PlusCircle/>
                         Create new record
                     </Button>
                 </DialogTrigger>
@@ -42,9 +41,16 @@ const CreateNewRecordButton = () =>
                     <DialogFooter>
                         <DialogClose>
                             <Button onClick={() => {
+                                toast({
+                                    title: "Creating new record for you",
+                                    description: "We will refresh the page once the record is created"
+                                })
                                 CreateNewRecord(getDomain,getPassword)
-                                .then(router.refresh)
-                                }}>Save</Button>
+                                .then(() => {
+                                    window.location.reload()
+                                })
+                                }
+                            }>Save</Button>
                         </DialogClose>
                     </DialogFooter>
                 </DialogContent>

@@ -10,14 +10,12 @@ interface RecordTableRowProps {
 }
 
 const RecordTableRow: React.FC<RecordTableRowProps> = ({domainInput, passwordInput, ipInput}) => {
-    const [domain, setDomain] = useState(domainInput)
-    const [password, setPassword] = useState(passwordInput)
     return(
         <TableRow>
             <TableCell>{domainInput}</TableCell>
             <TableCell>{ipInput}</TableCell>
-            <TableCell className="flex justify-center"><EditButton></EditButton></TableCell>
-            <TableCell><DeleteButton></DeleteButton></TableCell>
+            <TableCell className="flex justify-center"><EditButton domain={domainInput} password={passwordInput}></EditButton></TableCell>
+            <TableCell><DeleteButton domain={domainInput}></DeleteButton></TableCell>
         </TableRow>
     )
 };
