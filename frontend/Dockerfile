@@ -2,10 +2,7 @@
 
 FROM node:18-alpine AS base
 
-ARG ENV_VARIABLE=production
-ENV ENV_VARIABLE=$ENV_VARIABLE
-ARG NEXT_PUBLIC_RECORD_API_URL=http://record-service:8080/record
-ENV NEXT_PUBLIC_RECORD_API_URL=$NEXT_PUBLIC_RECORD_API_URL
+ARG NEXT_PUBLIC_RECORD_API_URL=http://localhost:3001/record
 
 # Install dependencies only when needed
 FROM base AS deps
