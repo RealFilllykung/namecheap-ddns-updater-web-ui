@@ -1,3 +1,4 @@
+using System.Net;
 using Microsoft.EntityFrameworkCore;
 using record_service.infrastructures.databases;
 using record_service.infrastructures.interfaces.repositories;
@@ -16,7 +17,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name:specificOriginSection,
         policy =>
         {
-            policy.WithOrigins(builder.Configuration["SpecificOrigin"]!);
+            policy.AllowAnyOrigin();
             policy.AllowAnyHeader();
             policy.AllowAnyMethod();
         });
