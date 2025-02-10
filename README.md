@@ -74,6 +74,43 @@ After you press save, the system will create new record and appear into your web
 
 ![alt text](images/image-10.png)
 
+## Development Project Setup
+
+Here are the development project setup in case you want to further develop this project. We will be discussing about the tools and how to run the development environment.
+
+### Recommend Development Tools
+
+Here are the tools I used to develop this project.
+
+- Frontend: VS Code
+- Backend: JetBrains Rider
+
+### Backend
+
+For testing the backend, please use the following command to run backend Docker compose.
+
+```
+docker-compose up -f docker-compose-development-backend.yaml
+```
+
+You can freely close any Docker container in case you want to run the backend on your host machine.
+
+### Frontend
+
+For testing the frontend, please use the following command to run backend development environment.
+
+```
+docker-compose up -f docker-compose-development-frontend.yaml
+```
+
+After you already run backend, please use the following command to run the frontend.
+
+```
+cd \
+npm install \
+npm run dev
+```
+
 ## Technical Specification
 
 Before we move on, if you want to investigate my design decision, please feel free to access `design-decision` folder. In those folder will contains bunch of questions and decision that I have used for making this project.
