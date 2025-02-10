@@ -95,6 +95,13 @@ docker-compose up -f docker-compose-development-backend.yaml
 
 You can freely close any Docker container in case you want to run the backend on your host machine.
 
+For .NET project, please change your terminal directory to the project and run the following command to run the project.
+
+```
+dotnet restore \
+dotnet run .
+```
+
 ### Frontend
 
 For testing the frontend, please use the following command to run backend development environment.
