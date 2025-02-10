@@ -1,19 +1,7 @@
 services:
-  web-service:
-    restart: always
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-      args:
-        NEXT_PUBLIC_RECORD_API_URL: http://localhost:3001/record
-    ports:
-      - 3000:3000
-    deploy:
-      resources:
-        limits:
-          memory: 50M
-
   record-service:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development.Frontend
     restart: always
     build:
       context: ./backend/record-service
@@ -23,7 +11,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 50M
+          memory: 80M
 
   password-service:
     restart: always
@@ -33,7 +21,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 50M
+          memory: 80M
 
   ddns-ip-service:
     restart: always
@@ -43,7 +31,7 @@ services:
     deploy:
       resources:
         limits:
-          memory: 50M
+          memory: 80M
   
   database:
     image: postgres:alpine
