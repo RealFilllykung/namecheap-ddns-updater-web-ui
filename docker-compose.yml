@@ -4,6 +4,8 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_RECORD_API_URL: http://localhost:3001/record
     ports:
       - 3000:3000
     deploy:

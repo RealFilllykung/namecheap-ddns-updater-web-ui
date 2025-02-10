@@ -2,7 +2,7 @@
 
 FROM node:18-alpine AS base
 
-ARG NEXT_PUBLIC_RECORD_API_URL=http://localhost:3001/record
+ARG NEXT_PUBLIC_RECORD_API_URL
 
 # Install dependencies only when needed
 FROM base AS deps
